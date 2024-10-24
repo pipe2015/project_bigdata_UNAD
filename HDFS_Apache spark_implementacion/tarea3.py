@@ -1,6 +1,14 @@
 #Importamos librerias necesarias
 from pyspark.sql import SparkSession, functions as F
 
+"""
+docs: https://jackyfu1995.medium.com/data-engineering-introduction-and-implementation-of-spark-python-7391c8da2e2e
+Cleaning Data with Apache Spark in Python:
+https://www.tutorialspoint.com/cleaning-data-with-apache-spark-in-python
+Apache Spark: Data cleaning using PySpark for beginners
+https://medium.com/bazaar-tech/apache-spark-data-cleaning-using-pyspark-for-beginners-eeeced351ebf
+"""
+
 file_path_csv = "ckickstream_blognews_05.csv"
 
 # Inicializa la sesión de Spark
