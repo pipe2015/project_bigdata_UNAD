@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from multiprocessing import Pool
 # process bar 0 - 100% para mejor presentacion lib: https://tqdm.github.io/
 from tqdm import tqdm
+from concurrent.futures import ThreadPoolExecutor
 
 """
 Problema con esta imolementacion esque si por ejemplo, renderizo 500_000 registros se demora,
@@ -107,7 +108,7 @@ def convert_file_size(size_in_bytes):
 def get_file_info(file_path):
     # Obtener la fecha de creación del archivo
     creation_time = os.path.getctime(file_path)
-    creation_date = datetime.datetime.fromtimestamp(creation_time)
+    creation_date = datetime.fromtimestamp(creation_time)
 
     # Convertir el tamaño a una unidad apropiada
     formatted_size = convert_file_size(os.path.getsize(file_path))
@@ -144,9 +145,9 @@ def generate_csv(filename = "", num_records = -1):
 #///////////////////////////////////////////** Implementando processing Parallel **/////////////////////////////////////////
 
 # fn que genera los registros en paralelo por records_per_process
-def generate_process_data_parallet(pct_processs_idx): # params => pct_processs_idx = Int
+def generate_process_data_parallet(pct_processs_idx, progress_bar): # params => pct_processs_idx = Int
     data = []
-    for i in range(num_records):
+    for i in range(records_per_process):
         user = random.choice(users)
         user_id = user["User_ID"]
         session_id = str(uuid.uuid4())[:20]
@@ -167,9 +168,12 @@ def generate_process_data_parallet(pct_processs_idx): # params => pct_processs_i
             user_id, session_id, timestamp, page_url, clicks, time_spent_seconds, browser_type, device_type,
             article_category, article_name, video_views, interacted_elements, geo_location
         ])
+        
+        if progress_bar: # actualizzo con el for la cantidad de procesos que va ser igual num_records
+            progress_bar.update(1)
     
     # Guardar los datos temporales en cache osea pueede ser en un archivo en local
-    temporary_file_name = f"{file_name_csv}_{pct_processs_idx}.csv"    
+    temporary_file_name = f"temp_{file_name_csv}_{pct_processs_idx}.csv"    
     df_Dataframe = pd.DataFrame(data, columns = list(fields_data.keys()))
     df_Dataframe.to_csv(temporary_file_name, index=False, encoding='utf-8')
     return temporary_file_name
@@ -180,29 +184,47 @@ def combine_csv_files(file_list, output_file):
     combine_df = pd.concat(df_list, ignore_index=True)
     combine_df.to_csv(output_file, index=False, encoding='utf-8')
 
-# Función principal para ejecutar el procesamiento en paralelo
-def run_generate_csv():
-    with Pool(num_processes) as pool: # creamos una instance del pool para trabajar con datos en proceso
-        # ejecutamos y creamos una lista de los archivos temp, lo que hago es mapiarlos y retorna la urs temp fil y lsito. 
-        file_list = pool.map(generate_process_data_parallet, range(num_processes)) # y pasados un arreglo de los idx = 1 - 5.
-    
-    # Combinar los archivos CSV generados en un solo archivo
-    combine_csv_files(file_list, "List_csv_data/test_processing_file.csv")
-
-    # Eliminar los archivos temporales
+def delete_filestemp_all(file_list):
+     # Eliminar los archivos temporales
     for file in file_list:
         os.remove(file)
 
+# Función principal para ejecutar el procesamiento en paralelo
+def run_generate_csv():
+    file_path_temp = "List_csv_data/test_processing_file.csv"
+    file_list_data = []
+    total_iterations = num_records  # el mumero de ireraciones en este caso seria el total num_records
+    with tqdm(total = total_iterations, desc = "Progress process", unit = "Tiempo de Registros") as progress_bar:
+        # creamos la instacioa de pool de hilos
+        with ThreadPoolExecutor(max_workers = num_processes) as executor:
+            # pasamos el numero de procesos a la funcion anonima y return el temp file
+            file_list = list(executor.map(lambda idx: generate_process_data_parallet(idx, progress_bar), range(num_processes)))
+    
+
+        # Combinar los archivos CSV generados en un solo archivo
+        combine_csv_files(file_list, file_path_temp)
+        file_list_data.append(file_list)
+    """
+    with Pool(num_processes) as pool: # creamos una instance del pool para trabajar con datos en proceso
+        # ejecutamos y creamos una lista de los archivos temp, lo que hago es mapiarlos y retorna la urs temp fil y lsito. 
+        file_list = pool.map(generate_process_data_parallet, range(num_processes)) # y pasados un arreglo de los idx = 1 - 5.
+    """
+    
+    return (file_list_data, file_path_temp)
 
 # auto eject fn main
 if __name__ == "__main__":
     print("generando::=")
-    run_generate_csv()
+    [temp_files, file_path_temp] = run_generate_csv()
+    delete_filestemp_all(temp_files[0])
+    get_file_info(file_path_temp)
 
 """
 file_name_csv = "List_csv_data" + "/" + file_name_csv + ".csv" 
 df_Dataframe = generate_csv(file_name_csv, num_records)
 """
+
+exit(1) # close exec file
 
 # Funciones de análisis
 def get_average_time_spent(df):
