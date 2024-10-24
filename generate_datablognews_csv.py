@@ -112,7 +112,9 @@ def get_file_info(file_path):
 
     # Convertir el tamaño a una unidad apropiada
     formatted_size = convert_file_size(os.path.getsize(file_path))
-
+    
+    print("/|*******************-*******************|\\")
+    print(f"Ubicacion de archivo: {os.path.abspath(file_path)}")
     print(f"Fecha de creación: {creation_date.strftime('%Y-%m-%d %H:%M:%S')}")
     print(f"Tamaño del archivo: {formatted_size}")
 
