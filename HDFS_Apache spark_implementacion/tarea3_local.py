@@ -1,9 +1,9 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, avg, sum, count, max, min, stddev
 
-
 """
 no se puede usar hay que instalar y configurar hadoop para windows da errores
+docts: https://jackyfu1995.medium.com/data-engineering-introduction-and-implementation-of-spark-python-7391c8da2e2e
 """
 
 # Inicializar SparkSession
