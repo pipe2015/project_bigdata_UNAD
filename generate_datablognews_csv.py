@@ -5,10 +5,28 @@ import random
 import re
 import uuid
 from datetime import datetime, timedelta
+from multiprocessing import Pool
+# process bar 0 - 100% para mejor presentacion lib: https://tqdm.github.io/
+from tqdm import tqdm
+
+"""
+Problema con esta imolementacion esque si por ejemplo, renderizo 500_000 registros se demora,
+entonces boy a implementar el modulo multiprocessing nativo de Py para dividir la generacion de registros
+dicen (Divida y venceras) eso es lo vamos a implementar:
+La idea es procesar Resistros en (paralelo) o sea al mismo tiempo, entonces si tengo 150_000 registros voy 
+a crear 5 archivos temporales en cache (150_000 / 5) = 30_000 registros al mismo tiempo y luego los uno.
+si quieren saber mas: docs.
+https://docs.python.org/3/library/multiprocessing.html,
+https://www.digitalocean.com/community/tutorials/python-multiprocessing-example
+Esta es mi pagina favorita: (realpython.com).
+https://realpython.com/courses/speed-python-concurrency/
+"""
 
 num_records = 150_000  # count registros
 num_users = 5  # Numero de usuarios únicos
 file_name_csv = "ckickstream_blognews"
+num_processes = 5  # Número de procesos paralelos
+records_per_process = num_records // num_processes  # Registros por proceso, floor decimal minimo
 
 # Definir los 5 usuarios
 users = [
@@ -100,7 +118,7 @@ def get_file_info(file_path):
 def generate_csv(filename = "", num_records = -1):
     global list_generate_Data_csv
     list_generate_Data_csv = list_generate_Data_csv(num_records)
-    df_Dataframe = pd.DataFrame(list_generate_Data_csv, columns=list(fields_data.keys()))
+    df_Dataframe = pd.DataFrame(list_generate_Data_csv, columns = list(fields_data.keys()))
     # Verificar si el archivo ya existe
     if os.path.exists(filename):
         files = os.listdir("List_csv_data")
@@ -118,13 +136,73 @@ def generate_csv(filename = "", num_records = -1):
             df_Dataframe.to_csv(get_file_name_ext(filename, "_01"), index=False, encoding='utf-8')
     else:
         # Crear DataFrame con las fechas aleatorias
-        df_Dataframe = pd.DataFrame(list_generate_Data_csv, columns=list(fields_data.keys()))
+        df_Dataframe = pd.DataFrame(list_generate_Data_csv, columns = list(fields_data.keys()))
         df_Dataframe.to_csv(filename, index=False, encoding='utf-8')
     
     return df_Dataframe
 
+#///////////////////////////////////////////** Implementando processing Parallel **/////////////////////////////////////////
+
+# fn que genera los registros en paralelo por records_per_process
+def generate_process_data_parallet(pct_processs_idx): # params => pct_processs_idx = Int
+    data = []
+    for i in range(num_records):
+        user = random.choice(users)
+        user_id = user["User_ID"]
+        session_id = str(uuid.uuid4())[:20]
+        timestamp = random_timestamp_one_year().strftime('%Y-%m-%d %H:%M:%S')
+        page_url = f"{fields_data.get('Page_URL')}/{random.randint(1, 100)}"
+        clicks = random.randint(1, 20)
+        time_spent_seconds = random.randint(10, 600)
+        browser_type = random.choice(fields_data.get('Browser_Type'))
+        device_type = random.choice(fields_data.get('Device_Type'))
+        article_category = random.choice(fields_data.get('Article_Category'))
+        article_name = random.choice(get_articles_by_category(article_category))
+        video_views = random.randint(0, 5)
+        interacted_elements = random.choice(fields_data.get('Interacted_Elements'))
+        geo_location = random.choice(fields_data.get('Geo_Location'))
+        
+        # Agregar el registro a la lista de datos
+        data.append([
+            user_id, session_id, timestamp, page_url, clicks, time_spent_seconds, browser_type, device_type,
+            article_category, article_name, video_views, interacted_elements, geo_location
+        ])
+    
+    # Guardar los datos temporales en cache osea pueede ser en un archivo en local
+    temporary_file_name = f"{file_name_csv}_{pct_processs_idx}.csv"    
+    df_Dataframe = pd.DataFrame(data, columns = list(fields_data.keys()))
+    df_Dataframe.to_csv(temporary_file_name, index=False, encoding='utf-8')
+    return temporary_file_name
+
+# fn para combinar los archivos en uno solo en la carperta
+def combine_csv_files(file_list, output_file):
+    df_list = [pd.read_csv(file) for file in file_list]
+    combine_df = pd.concat(df_list, ignore_index=True)
+    combine_df.to_csv(output_file, index=False, encoding='utf-8')
+
+# Función principal para ejecutar el procesamiento en paralelo
+def run_generate_csv():
+    with Pool(num_processes) as pool: # creamos una instance del pool para trabajar con datos en proceso
+        # ejecutamos y creamos una lista de los archivos temp, lo que hago es mapiarlos y retorna la urs temp fil y lsito. 
+        file_list = pool.map(generate_process_data_parallet, range(num_processes)) # y pasados un arreglo de los idx = 1 - 5.
+    
+    # Combinar los archivos CSV generados en un solo archivo
+    combine_csv_files(file_list, "List_csv_data/test_processing_file.csv")
+
+    # Eliminar los archivos temporales
+    for file in file_list:
+        os.remove(file)
+
+
+# auto eject fn main
+if __name__ == "__main__":
+    print("generando::=")
+    run_generate_csv()
+
+"""
 file_name_csv = "List_csv_data" + "/" + file_name_csv + ".csv" 
 df_Dataframe = generate_csv(file_name_csv, num_records)
+"""
 
 # Funciones de análisis
 def get_average_time_spent(df):

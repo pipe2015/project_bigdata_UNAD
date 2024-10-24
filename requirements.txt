@@ -1,3 +1,4 @@
+colorama==0.4.6
 numpy==2.1.2
 pandas==2.2.3
 py4j==0.10.9.7
@@ -5,4 +6,5 @@ pyspark==3.5.3
 python-dateutil==2.9.0.post0
 pytz==2024.2
 six==1.16.0
+tqdm==4.66.5
 tzdata==2024.2
