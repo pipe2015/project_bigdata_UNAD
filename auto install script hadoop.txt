@@ -1,0 +1,14 @@
+Instrucciones para crear y ejecutar el scripts (Debe ser usado con Putty):
+
+//command::
+nano <el nombre del script>.sh
+//command:: #guarda el script en terminal
+chmod +x mi-script.sh
+//command:: #ejecuta el script en la consola
+sudo ./<file_name>.sh
+
+Nota: el primero en el usuario (root): Main_Hadoop.sh
+Nota: el segundo en el usuario (Hadoop): Main_Hadoop.sh
+
+
+wget https://raw.githubusercontent.com/pipe2015/project_bigdata_UNAD/refs/heads/master/List_csv_data/ckickstream_blognews_05.csv
