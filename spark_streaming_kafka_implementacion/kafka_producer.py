@@ -187,7 +187,7 @@ def generate_clickstream_data():
         "User_ID": random.randint(1, 1000),
         "Session_ID": random.randint(1, 100),
         "Timestamp": int(time.time()),
-        "Page_URL": "https://crossdevblog.com/article/" + random.randint(1, 10),
+        "Page_URL": "https://crossdevblog.com/article/" + str(random.randint(1, 10)),
         "Time_Spent_seconds": random.randint(1, 300),
         "Clicks": random.randint(1, 50),
         "Browser_Type": random.choice(['Chrome', 'Firefox', 'Safari', 'Edge']),

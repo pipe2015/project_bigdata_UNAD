@@ -51,7 +51,7 @@ parsed_df = df.select(from_json(col("value").cast("string"), schema).alias("data
 # Calcula las estadisticas por ventana de tiempo (promedio de tiempo en la pgina por categoria y tipo de dispositivo)
 windowed_stats = parsed_df \
     .groupBy(window(col("Timestamp"), "1 minute"), "Article_Category", "Device_Type") \
-    .agg({"Time_Spent_seconds": "avg", "Clicks Total": "sum"})
+    .agg({"Time_Spent_seconds": "avg", "Clicks": "sum"})
 
 # Escribir los resultados en la consola
 query = windowed_stats \
