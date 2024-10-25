@@ -121,4 +121,4 @@ A continuación, se Muestra la ejecución de los archivos `kafka_producer.py` y 
 
 ### Run File `spark_streaming_consumer.py`
 ---
-![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/12.2.png)
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/11.2.png)
