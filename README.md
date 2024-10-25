@@ -99,14 +99,14 @@ A continuación, se Muestra la ejecución de archivo `ckickstream_blognews_05.cs
 
 ### Run Test Analisis #1
 ---
-![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/05-2.png)
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/06-2.png)
 
 
 ### Run Test Analisis #2
 ---
-![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/05-3.png)
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/07-3.png)
 
 
 ### Run Test Analisis #3
 ---
-![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/05-4.png)
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/08-4.png)
