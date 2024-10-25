@@ -2,7 +2,7 @@
 
 Este projecto es para fines de practtica usando tecnologias y herramientas para procesar grandes volumenes de datos (Big Data)
 
-# Proyecto Python - Instalación y Configuración en Windows
+# 1. Proyecto Python - Instalación y Configuración en Windows
 
 Este documento proporciona los pasos necesarios para la instalación de Python y la configuración del entorno de desarrollo en Windows, utilizando un archivo `requirements.txt` para instalar las dependencias necesarias del proyecto.
 
@@ -75,3 +75,38 @@ Y Listo.
 A continuacion, se muestra la generacion de los datos usando el Archivo `test_processing_file.csv`
 
 ![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/05.png)
+
+# 2. Proyecto Python HDFS Apache Spark - Implementacion
+
+A continuación, se Muestra la ejecución de archivo `ckickstream_blognews_05.csv`  con todos los análisis de datos mostrados:
+
+```bash
+•	Número total de usuarios
+•	Sesiones por dispositivo
+•	Número total de cliks por usuario
+•	Número total de clikss por artículo
+•	Tiempo promedio que los usuarios pasan en las páginas
+•	Videos vistos por categoria
+•	Numero de articulos leídos por categoria
+•	Analisis de la ubicacion geografica
+•	Obtener la primera y última interacción por usuario en 2024
+```
+
+### Vemos las estadisticas básicas
+---
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/05-1.png)
+
+
+### Run Test Analisis #1
+---
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/05-2.png)
+
+
+### Run Test Analisis #2
+---
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/05-3.png)
+
+
+### Run Test Analisis #3
+---
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/05-4.png)
