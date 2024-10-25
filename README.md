@@ -67,8 +67,11 @@ Y Listo.
 
 ## Muestra la ejecucion del Proyecto para generar el archivo `.csv`
 
-### Run Test Image
+### Run Test Image #1
 ![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/03.png)
+
+### Run Test Image #2
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/06.png)
 
 # Proyecto Python - Muestra y lectura de Datos
 
