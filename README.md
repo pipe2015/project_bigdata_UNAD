@@ -110,3 +110,15 @@ A continuación, se Muestra la ejecución de archivo `ckickstream_blognews_05.cs
 ### Run Test Analisis #3
 ---
 ![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/08-4.png)
+
+# 3. Proyecto Python Procesamiento en tiempo real (Spark Streaming & Kafka): - Implementacion Fase 3
+
+A continuación, se Muestra la ejecución de los archivos `kafka_producer.py` y `spark_streaming_consumer.py` con todos los análisis de datos mostrados:
+
+### Run File `kafka_producer.py`
+---
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/10.1.png)
+
+### Run File `spark_streaming_consumer.py`
+---
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/12.2.png)
