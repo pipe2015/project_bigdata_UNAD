@@ -72,7 +72,7 @@ Y Listo.
 
 # Proyecto Python - Muestra y lectura de Datos
 
-A continuacion, se muestra la generacion de los datos usando el Archivo `test_processing_file.csv`
+A continuacion, se muestra la generacion de los datos usando el Archivo `test_processing_file.csv` que tiene `150_000` registros
 
 ![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/05.png)
 
