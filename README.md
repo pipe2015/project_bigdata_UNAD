@@ -119,6 +119,16 @@ A continuación, se Muestra la ejecución de los archivos `kafka_producer.py` y 
 ---
 ![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/10.1.png)
 
-### Run File `spark_streaming_consumer.py`
+### Run 
 ---
-![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/11.2.png)
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/17.1.png)
+
+## Visualizacion de los resultados del procesamiento en Real Time.
+
+### Run [https://192.168.1.9/StreamingQuery/](https://https://192.168.1.9/StreamingQuery/) - Visualizacion #1
+---
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/17.1.png)
+
+### Run [https://192.168.1.9/StreamingQuery/](https://https://192.168.1.9/StreamingQuery/) - Visualizacion #2
+---
+![alt text](https://github.com/pipe2015/project_bigdata_UNAD/blob/master/Images_project/18.1.png)
