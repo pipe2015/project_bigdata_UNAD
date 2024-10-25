@@ -34,7 +34,7 @@ schema = StructType([
 
 # Crear una sesión de Spark 
 spark = SparkSession.builder \
-    .appName("SparkStreamingDataAnalysis") \
+    .appName("ClickStreamDataAnalysis") \
     .getOrCreate()
 
 # Configurar el lector de streaming para leer desde Kafka
