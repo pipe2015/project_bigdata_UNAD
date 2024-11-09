@@ -20,7 +20,7 @@ donde se compone con Grupos de familias, donde cada columna del grupo va asociad
 - py clickstream_querys.py -c | --connect => muestra la conexion si es exitoda en caso de no Error
 - py clickstream_querys.py -d | --delete => Elimina la base de datos actual (click_stream), para despues crear los datos
 - py clickstream_querys.py => se ejecuta normal y muestra los resultados.
-Documentacion online de que me base para crear el proyecto::
+Documentacion online, por si tener mas conocimiento::
 - https://realpython.com/python-exceptions/ -> como trabajar con exceptions
 - https://happybase.readthedocs.io/en/latest/user.html -> uso de la guia de usuario en happybase
 - https://happybase.readthedocs.io/en/latest/api.html -> uso de los metodos con todos sus params en happybase
