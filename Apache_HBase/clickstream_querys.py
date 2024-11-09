@@ -105,9 +105,21 @@ def generate_data_dict(row, column_families, column_aliases = None):
         if not column_aliases:  # si esta vacio lanza error
             raise ValueError("column_aliases no puede estar vacío.")
     
-    for family, columns_data in column_families.items(): # 
-        for colum_data in columns_data:
+    for family, columns_data in column_families.items(): # me retorna cada familia por el grupo de datos que se van a guardar
+        for colum_data in columns_data: # iter list para devolver el valor de cada grupo de famila
+            # si se pasa un alias para cada columna del grupo de familias se usa ese, sino default value
+            """
+            si tengo esta dict con los siguientes alias se usan esos usando (v) ejemplo::
+            column_aliases = {
+                'User_ID': 'User_temp_Id', 
+                'Session_ID': 'Storage_Id', 
+            }
+            """
             alias = column_aliases.get(colum_data, f"Valor no encontrado: {str(colum_data)}") if column_aliases else colum_data
+            """
+            se guarda el un dict, donde la (k => user_data:User_ID) para obtener y guardar los datos.
+            y el (v => valos de los datos del archivo CSV por cada [fila & columna]) del dict
+            """
             data_dict[f"{family}:{alias}"] = str(row[colum_data])
     return data_dict
 
@@ -120,7 +132,8 @@ def add_data_hbase(connection, table_name):
         data = pd.read_csv(file_path_csv, encoding='utf-8') # leemos el archivo csv y lo iteramos
         # Agregar datos a HBase
         for index, row in data.iterrows(): 
-            table.put(f'user_{str(index)}', generate_data_dict(row, {
+            #se debe crear un indice para cada Fila de datos guardados, usando todos los grupos de familias 
+            table.put(f'user_{str(index)}', generate_data_dict(row, { # var row, con la list de datos de cada fila CSV 
                 'user_data': ['User_ID', 'Session_ID', 'Timestamp'],
                 'page_data': ['Page_URL', 'Time_Spent_seconds', 'Clicks'],
                 'device_data': ['Browser_Type', 'Device_Type'],
@@ -128,9 +141,9 @@ def add_data_hbase(connection, table_name):
                 'geo_data': ['Geo_Location']
             }))
 
-        print("Datos guardados exitosamente.")
+        print("Datos guardados exitosamente.") # imprime datos
     else:
-        print("La tabla ya contiene datos.")
+        print("La tabla ya contiene datos.") # imprime ya exiten datos
     
     return table
 
@@ -276,6 +289,7 @@ def result_data_hbase(table_data):
 #fn ejecuta todo el code
 def run():
     try:
+        #agrego la descripcion de los argumentos, cuando pasa -h | --help
         parser = argparse.ArgumentParser(description="Apache HBase, --delete & --connect")
         
         # parametros permitidos (--delete & --connect), no toma valor y por defecto es (True) si lo pasa
@@ -288,12 +302,12 @@ def run():
         # Verifica si hay parametros no establecidos
         if unknown_args: raise ValueError(f"Error: Se han pasado argumentos no permitidos: {unknown_args}")
         
-        if args.connect:
+        if args.connect: # si pasa el argv (-c | --connect)
             print(f"Validando la conexion: {args.connect}")
             connection_hbase()
             return
         
-        if args.delete:
+        if args.delete: # si pasa el argv (-d | --delete)
             print(f"Eliminando la tabla de la DB: {args.delete}")
             # Conectar y crear la tabla de la base de datos
             create_table(connection_hbase(), table_name, families, args.delete)
