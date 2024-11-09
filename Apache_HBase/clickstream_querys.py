@@ -6,6 +6,29 @@ from tabulate import tabulate
 import argparse
 import sys
 
+"""
+-Implementar la base de datos de columnas con Apache Hbase con toda la configuacion lo mejr posible con lo siguiente:
+-se declara una varible file_path_csv para leer los datos con la libreria pandas usando el mismo archivo que se
+trabajo en la fase 3 de este proyecto big Data(CSV)
+-se crea una estructura con en nombre de la tabla (click_stream) y de da la estructura para la creaciin de la DB
+donde se compone con Grupos de familias, donde cada columna del grupo va asociada al grupo como se muestra:
+- families: familia de grupos
+- column_families: los colummnas de cada grupo de familias.
+- Se utilizaron librerias tabulate, pandas, itertools y argparse para el script
+- Ejecucion del script -> ::
+- py clickstream_querys.py --help | -h => muestra los camandos y que hace cada uno
+- py clickstream_querys.py -c | --connect => muestra la conexion si es exitoda en caso de no Error
+- py clickstream_querys.py -d | --delete => Elimina la base de datos actual (click_stream), para despues crear los datos
+- py clickstream_querys.py => se ejecuta normal y muestra los resultados.
+Documentacion online de que me base para crear el proyecto::
+- https://realpython.com/python-exceptions/ -> como trabajar con exceptions
+- https://happybase.readthedocs.io/en/latest/user.html -> uso de la guia de usuario en happybase
+- https://happybase.readthedocs.io/en/latest/api.html -> uso de los metodos con todos sus params en happybase
+- https://realpython.com/python-command-line-arguments/ -> como trabajar con la linea de comandos
+- https://pypi.org/project/tabulate/ -> como trabajar con la vista de las tablas en la terminal
+- https://www.tutorialspoint.com/hbase/index.htm -> explicacion de la BD de columnas
+"""
+
 file_path_csv = "ckickstream_blognews_05.csv"
 table_name = 'click_stream' 
 families = { 
