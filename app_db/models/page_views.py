@@ -4,6 +4,7 @@ from models.categories import Category
 from models.articles import Article
 
 class PageView(EmbeddedDocument):
+    _id = StringField(primary_key = True)
     page_url = StringField(required=True)
     session = ReferenceField(Session, required=True)
     time_spent_seconds = StringField()
