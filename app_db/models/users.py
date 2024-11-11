@@ -1,9 +1,9 @@
 from mongoengine import Document, StringField, ReferenceField
 from datetime import datetime
 
-#creamos el modelos y lo extendemos de document y le asignaos los campos
+# documentacion mongoengine para crear los modelos, [https://docs.mongoengine.org/guide/defining-documents.html]
+#definimos le modelo para la tabla de la usars => Guarda los registros de caad usuario 
 class User(Document):
-    _id = StringField(primary_key = True)
     name = StringField(required = True)
     geo_location = StringField()
 
